@@ -32,7 +32,7 @@ services:
       - /var/log/nutcracker/nutcracker.log:/var/log/nutcracker/nutcracker.log
     command: nutcracker -c /etc/nutcracker.conf
   grafana:
-    image: grafana-custom:latest
+    image: grafana/grafana:latest
     ports:
       - '3000:3000'
     user: '1000'
