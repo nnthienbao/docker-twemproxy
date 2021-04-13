@@ -31,3 +31,42 @@ services:
       - ./twemproxy-data/nutcracker.yml:/etc/nutcracker.conf
       - /var/log/nutcracker/nutcracker.log:/var/log/nutcracker/nutcracker.log
     command: nutcracker -c /etc/nutcracker.conf
+  grafana:
+    image: grafana-custom:latest
+    ports:
+      - '3000:3000'
+    user: '1000'
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_AUTH_BASIC_ENABLED=true
+      - GF_ENABLE_GZIP=true
+      # - GF_INSTALL_PLUGINS=redis-app,redis-datasource,grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - ./grafana/config.ini:/etc/grafana/config.ini
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/data:/var/lib/grafana
+    depends_on:
+      - twemproxy
+  prometheus:
+    image: "prom/prometheus:master"
+    command: ["--config.file=/prometheus.yml"]
+    volumes:
+      - ./prometheus-data/prometheus.yaml:/prometheus.yml
+    ports:
+      - 9090:9090
+    depends_on:
+      - twemproxy
+  
+  twemproxy_exporter:
+    image: "baonnt/twemproxy_exporter"
+    command: ["--twemproxy.stats-address=twemproxy:22222"]
+    ports:
+      - 9151:9151
+    depends_on:
+      - twemproxy
+
+networks:
+  default:
+    external:
+      name: twemproxy-docker_default
