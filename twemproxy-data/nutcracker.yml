@@ -2,10 +2,11 @@ alpha:
   listen: 0.0.0.0:22121
   hash: fnv1a_64
   distribution: ketama
-  auto_eject_hosts: true
   redis: true
-  server_retry_timeout: 2000
-  server_failure_limit: 1
+  auto_eject_hosts: true
+  server_retry_timeout: 30000
+  server_failure_limit: 2
+  timeout: 500
   servers:
    - redis_1:7001:1
    - redis_2:7002:1

@@ -30,7 +30,7 @@ services:
     volumes:
       - ./twemproxy-data/nutcracker.yml:/etc/nutcracker.conf
       - /var/log/nutcracker/nutcracker.log:/var/log/nutcracker/nutcracker.log
-    command: nutcracker -c /etc/nutcracker.conf
+    command: ["--conf-file=/etc/nutcracker.conf", "--mbuf-size=512", "--verbose=4"]
   grafana:
     image: grafana/grafana:latest
     ports:

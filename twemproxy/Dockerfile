@@ -8,6 +8,6 @@ RUN apt-get install -y autoconf git libtool make
 
 RUN git clone 'https://github.com/twitter/twemproxy.git'
 
-RUN cd twemproxy && autoreconf -fvi && CFLAGS="-ggdb3 -O0" ./configure --enable-debug=full && make && make install
+RUN cd twemproxy && autoreconf -fvi && CFLAGS="-ggdb3 -O0" ./configure --enable-debug=log && make && make install
 
 ENTRYPOINT [ "nutcracker" ]
