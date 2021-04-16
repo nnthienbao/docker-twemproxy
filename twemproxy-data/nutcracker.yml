@@ -11,3 +11,5 @@ alpha:
    - redis_1:7001:1
    - redis_2:7002:1
    - redis_3:7003:1
+   - redis_4:7004:1
+   - redis_5:7005:1
