@@ -108,6 +108,14 @@ services:
     ports:
       - 11671-11680:11671-11680
     network_mode: "host"
+  mcrouter:
+    image: "mcrouter/mcrouter"
+    command: ["--config-file=/usr/local/etc/mcrouter/mcrouter_config.json", "-p", "51111"]
+    ports:
+      - 51111:51111
+    volumes:
+      - ./mcrouter-data/mcrouter_config.json:/usr/local/etc/mcrouter/mcrouter_config.json
+    network_mode: "host"
 
 networks:
   default:

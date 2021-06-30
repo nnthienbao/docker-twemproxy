@@ -1,0 +1,19 @@
+{
+    "pools":{
+      "A":{
+        "servers":["localhost:11211",
+                   "localhost:11212",
+                   "localhost:11213"]
+      }
+    },
+    "route":{
+      "type":"OperationSelectorRoute",
+      "operation_policies":{
+           "delete":"AllSyncRoute|Pool|A",
+           "get":"FailoverRoute|Pool|A",
+           "gets":"FailoverRoute|Pool|A",
+           "set":"AllSyncRoute|Pool|A",
+           "add":"AllInitialRoute|Pool|A"
+      }
+    }
+  }
