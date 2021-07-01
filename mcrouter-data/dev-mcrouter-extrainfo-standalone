@@ -1,0 +1,14 @@
+{
+  "libmcrouter_options": {
+    "config_file": "/usr/local/etc/mcrouter/dev-prefix-broadcast-extrainfo.json",
+    "config_dump_root": "/usr/local/etc/mcrouter/dump1/config-dump",
+    "stats_root": "/usr/local/etc/mcrouter/dump1/stats",
+    "debug_fifo_root": "",
+    "num_proxies": "4",
+    "default_route": "/zsocial/default/"
+  },
+  "standalone_options": {
+    "ports": "11200,11201,11202,11203",
+    "log_file": "/usr/local/etc/mcrouter/log/mcrouter.log",
+  }
+}

@@ -1,0 +1,34 @@
+FAILURE 1625131644.325013 1 [mcrouter] [invalid-option] [mcrouter] options.cpp:232] Unknown option name: config_dump_root=/usr/local/etc/mcrouter/dump1/config-dump
+"mcrouter": /usr/local/bin/mcrouter /usr/local/etc/mcrouter/dev-mcrouter-extrainfo
+I0701 09:27:24.325124     1 main.cpp:335] /usr/local/bin/mcrouter /usr/local/etc/mcrouter/dev-mcrouter-extrainfo 
+I0701 09:27:24.325134     1 main.cpp:419] 34.0.0 mcrouter startup (1)
+I0701 09:27:24.325151     1 server.cpp:117] Spawning AsyncMcServer
+W0701 09:27:24.325358     1 McrouterInstance.cpp:161] Error while checking spooldir (/var/spool/mcrouter): No such file or directory [2]
+I0701 09:27:24.327952     1 McrouterInstance.cpp:510] started reconfiguring
+I0701 09:27:24.328950     1 McrouterInstance.cpp:527] reconfigured 4 proxies with 5 pools, 41 clients 7fb0d336a2312773ae6b089c19a06174)
+I0701 09:27:45.113243    13 ProxyDestination.cpp:473] server 127.0.0.1:10000:ascii:plain:notcompressed-1000 up (1 of 41)
+I0701 09:27:57.520874    14 ProxyDestination.cpp:473] server 127.0.0.1:10000:ascii:plain:notcompressed-1000 up (1 of 41)
+I0701 09:28:35.535015    15 ProxyDestination.cpp:473] server 127.0.0.1:10000:ascii:plain:notcompressed-1000 up (1 of 41)
+I0701 09:29:24.378389    14 ProxyDestination.cpp:473] server 127.0.0.1:10000:ascii:plain:notcompressed-1000 closed (0 of 41)
+I0701 09:29:24.397413    13 ProxyDestination.cpp:473] server 127.0.0.1:10000:ascii:plain:notcompressed-1000 closed (0 of 41)
+I0701 09:30:24.478164    15 ProxyDestination.cpp:473] server 127.0.0.1:10000:ascii:plain:notcompressed-1000 closed (0 of 41)
+I0701 09:31:40.944396    13 AsyncMcServer.cpp:71] Shutting down on signal
+I0701 09:31:40.945641     1 server.cpp:156] Shutting down
+FAILURE 1625131905.656067 1 [mcrouter] [invalid-option] [mcrouter] options.cpp:232] Unknown option name: config_dump_root=/usr/local/etc/mcrouter/dump1/config-dump
+"mcrouter": /usr/local/bin/mcrouter /usr/local/etc/mcrouter/dev-mcrouter-extrainfo
+I0701 09:31:45.656127     1 main.cpp:335] /usr/local/bin/mcrouter /usr/local/etc/mcrouter/dev-mcrouter-extrainfo 
+I0701 09:31:45.656141     1 main.cpp:419] 34.0.0 mcrouter startup (1)
+I0701 09:31:45.656167     1 server.cpp:117] Spawning AsyncMcServer
+W0701 09:31:45.656461     1 McrouterInstance.cpp:161] Error while checking spooldir (/var/spool/mcrouter): No such file or directory [2]
+I0701 09:31:45.661676     1 McrouterInstance.cpp:510] started reconfiguring
+I0701 09:31:45.664594     1 McrouterInstance.cpp:527] reconfigured 4 proxies with 5 pools, 41 clients 7fb0d336a2312773ae6b089c19a06174)
+I0701 09:32:10.900271    14 AsyncMcServer.cpp:71] Shutting down on signal
+I0701 09:32:10.905918     1 server.cpp:156] Shutting down
+FAILURE 1625132326.492398 1 [mcrouter] [invalid-option] [mcrouter] options.cpp:232] Unknown option name: config_dump_root=/usr/local/etc/mcrouter/dump1/config-dump
+"mcrouter": /usr/local/bin/mcrouter /usr/local/etc/mcrouter/dev-mcrouter-extrainfo
+I0701 09:38:46.492447     1 main.cpp:335] /usr/local/bin/mcrouter /usr/local/etc/mcrouter/dev-mcrouter-extrainfo 
+I0701 09:38:46.492458     1 main.cpp:419] 34.0.0 mcrouter startup (1)
+I0701 09:38:46.492480     1 server.cpp:117] Spawning AsyncMcServer
+W0701 09:38:46.492723     1 McrouterInstance.cpp:161] Error while checking spooldir (/var/spool/mcrouter): No such file or directory [2]
+I0701 09:38:46.495573     1 McrouterInstance.cpp:510] started reconfiguring
+I0701 09:38:46.496932     1 McrouterInstance.cpp:527] reconfigured 4 proxies with 5 pools, 41 clients 7fb0d336a2312773ae6b089c19a06174)

@@ -1,0 +1,123 @@
+{
+  "pools": {
+    "pool-device-19.37": "@pool_multiple_ports(10.30.19.37,11231,10)",
+    "pool-device-22.104": "@pool_multiple_ports(10.30.22.104,11231,10)",
+    "pool-device-65.126": "@pool_multiple_ports(10.30.65.126,11241,10)",
+    "pool-device-65.130": "@pool_multiple_ports(10.30.65.130,11241,10)",
+    "pool-device-6.181": "@pool_multiple_ports(10.30.6.181,11241,10)",
+
+    "pool-profile-19.37": "@pool_multiple_ports(10.30.19.37,11211,10)",
+    "pool-profile-22.104": "@pool_multiple_ports(10.30.22.104,11211,10)",
+    "pool-profile-65.126": "@pool_multiple_ports(10.30.65.126,11211,10)",
+    "pool-profile-65.130": "@pool_multiple_ports(10.30.65.130,11211,10)",
+    "pool-profile-6.181": "@pool_multiple_ports(10.30.6.181,11211,10)",
+
+    "pool-location-19.37": "@pool_multiple_ports(10.30.19.37,11541,10)",
+    "pool-location-22.104": "@pool_multiple_ports(10.30.22.104,11541,10)",
+    "pool-location-65.126": "@pool_multiple_ports(10.30.65.126,11541,10)",
+    "pool-location-65.130": "@pool_multiple_ports(10.30.65.130,11541,10)",
+    "pool-location-6.181": "@pool_multiple_ports(10.30.6.181,11541,10)",
+
+    "pool-extra-19.37": "@pool_multiple_ports(10.30.19.37,11671,10)",
+    "pool-extra-22.104": "@pool_multiple_ports(10.30.22.104,11671,10)",
+    "pool-extra-65.126": "@pool_multiple_ports(10.30.65.126,11671,10)",
+    "pool-extra-65.130": "@pool_multiple_ports(10.30.65.130,11671,10)",
+    "pool-extra-6.181": "@pool_multiple_ports(10.30.6.181,11671,10)",
+    
+    "pool-default": {
+      "servers": [
+        "10.30.6.72:11291"
+      ]
+    }
+
+  },
+  "macros": {
+    "route_broadcast_put_random_get": {
+      "type": "macroDef",
+      "params": [ "alias_name", "type" ],
+      "result": {
+        "aliases": [
+          "%alias_name%"
+        ],
+        "route": {
+          "type": "OperationSelectorRoute",
+          "operation_policies": {
+            "add": "Broadcast%type%",
+            "set":"Broadcast%type%",
+            "delete": "Broadcast%type%"
+          },
+          "default_policy": "Random%type%"
+        }
+      }
+    },
+    "pool_multiple_ports": {
+      "type": "macroDef",
+      "params": [ "ip", "first_port", "num_ports" ],
+      "result": {
+        "servers": {
+          "type": "transform",
+          "dictionary": "@range(@int(0),@sub(@int(%num_ports%),@int(1)))",
+          "itemName": "num",
+          "itemTransform": {
+            "type": "merge",
+            "params": [ "%ip%:", "@str(@add(@int(%first_port%), @int(%num%)))"]
+          }
+        }
+      }
+    }
+  },
+  "named_handles": [
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastDevice",
+      "children":["PoolRoute|pool-device-19.37", "PoolRoute|pool-device-22.104", "PoolRoute|pool-device-65.126", "PoolRoute|pool-device-65.130", "PoolRoute|pool-device-6.181"]
+    },
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastProfile",
+      "children":["PoolRoute|pool-profile-19.37", "PoolRoute|pool-profile-22.104", "PoolRoute|pool-profile-65.126", "PoolRoute|pool-profile-65.130", "PoolRoute|pool-profile-6.181"]
+    },
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastLocation",
+      "children":["PoolRoute|pool-location-19.37", "PoolRoute|pool-location-22.104", "PoolRoute|pool-location-65.126", "PoolRoute|pool-location-65.130", "PoolRoute|pool-location-6.181"]
+    },
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastExtrainfo",
+      "children":["PoolRoute|pool-extra-19.37", "PoolRoute|pool-extra-22.104", "PoolRoute|pool-extra-65.126", "PoolRoute|pool-extra-65.130", "PoolRoute|pool-extra-6.181"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomDevice",
+      "children":["PoolRoute|pool-device-19.37", "PoolRoute|pool-device-22.104", "PoolRoute|pool-device-65.126", "PoolRoute|pool-device-65.130", "PoolRoute|pool-device-6.181"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomProfile",
+      "children":["PoolRoute|pool-profile-19.37", "PoolRoute|pool-profile-22.104", "PoolRoute|pool-profile-65.126", "PoolRoute|pool-profile-65.130", "PoolRoute|pool-profile-6.181"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomLocation",
+      "children":["PoolRoute|pool-location-19.37", "PoolRoute|pool-location-22.104", "PoolRoute|pool-location-65.126", "PoolRoute|pool-location-65.130", "PoolRoute|pool-location-6.181"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomExtrainfo",
+      "children":["PoolRoute|pool-extra-19.37", "PoolRoute|pool-extra-22.104", "PoolRoute|pool-extra-65.126", "PoolRoute|pool-extra-65.130", "PoolRoute|pool-extra-6.181"]
+    }
+  ],
+  "routes":[
+    "@route_broadcast_put_random_get(/zsocial/device/,Device)",
+    "@route_broadcast_put_random_get(/zsocial/profile/,Profile)",
+    "@route_broadcast_put_random_get(/zsocial/location/,Location)",
+    "@route_broadcast_put_random_get(/zsocial/extra/,Extrainfo)",
+    {
+      "aliases": [ 
+        "/zsocial/default/"
+      ],
+      "route": "PoolRoute|pool-default"
+    }
+  ]
+}

@@ -1,85 +1,85 @@
 version: '3.9'
 
 services:
-  redis_1:
-    image: redis:6
-    ports:
-      - "7001:7001"
-    volumes:
-      - ./docker-data/redis_1.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
-  redis_2:
-    image: redis:6
-    ports:
-      - "7002:7002"
-    volumes:
-      - ./docker-data/redis_2.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
-  redis_3:
-    image: redis:6
-    ports:
-      - "7003:7003"
-    volumes:
-      - ./docker-data/redis_3.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
-  redis_4:
-    image: redis:6
-    ports:
-      - "7004:7004"
-    volumes:
-      - ./docker-data/redis_4.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
-  redis_5:
-    image: redis:6
-    ports:
-      - "7005:7005"
-    volumes:
-      - ./docker-data/redis_5.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
-  twemproxy:
-    image: baonnt/twemproxy
-    ports:
-      - "22121:22121"
-      - "22222:22222"
-    volumes:
-      - ./twemproxy-data/nutcracker.yml:/etc/nutcracker.conf
-      - /var/log/nutcracker/nutcracker.log:/var/log/nutcracker/nutcracker.log
-    command: ["--conf-file=/etc/nutcracker.conf", "--mbuf-size=512", "--verbose=4"]
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - '3000:3000'
-    user: '1000'
-    environment:
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_ANONYMOUS_ENABLED=false
-      - GF_AUTH_BASIC_ENABLED=true
-      - GF_ENABLE_GZIP=true
-      # - GF_INSTALL_PLUGINS=redis-app,redis-datasource,grafana-clock-panel,grafana-simple-json-datasource
-    volumes:
-      - ./grafana/config.ini:/etc/grafana/config.ini
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./grafana/data:/var/lib/grafana
-    network_mode: "host"
-    depends_on:
-      - twemproxy
-  prometheus:
-    image: "prom/prometheus:master"
-    command: ["--config.file=/prometheus.yml"]
-    volumes:
-      - ./prometheus-data/prometheus.yaml:/prometheus.yml
-    ports:
-      - 9090:9090
-    depends_on:
-      - twemproxy
-  
-  twemproxy_exporter:
-    image: "baonnt/twemproxy_exporter"
-    command: ["--twemproxy.stats-address=twemproxy:22222"]
-    ports:
-      - 9151:9151
-    depends_on:
-      - twemproxy
+  #redis_1:
+  #  image: redis:6
+  #  ports:
+  #    - "7001:7001"
+  #  volumes:
+  #    - ./docker-data/redis_1.conf:/usr/local/etc/redis/redis.conf
+  #  command: redis-server /usr/local/etc/redis/redis.conf
+  #redis_2:
+  #  image: redis:6
+  #  ports:
+  #    - "7002:7002"
+  #  volumes:
+  #    - ./docker-data/redis_2.conf:/usr/local/etc/redis/redis.conf
+  #  command: redis-server /usr/local/etc/redis/redis.conf
+  #redis_3:
+  #  image: redis:6
+  #  ports:
+  #    - "7003:7003"
+  #  volumes:
+  #    - ./docker-data/redis_3.conf:/usr/local/etc/redis/redis.conf
+  #  command: redis-server /usr/local/etc/redis/redis.conf
+  #redis_4:
+  #  image: redis:6
+  #  ports:
+  #    - "7004:7004"
+  #  volumes:
+  #    - ./docker-data/redis_4.conf:/usr/local/etc/redis/redis.conf
+  #  command: redis-server /usr/local/etc/redis/redis.conf
+  #redis_5:
+  #  image: redis:6
+  #  ports:
+  #    - "7005:7005"
+  #  volumes:
+  #    - ./docker-data/redis_5.conf:/usr/local/etc/redis/redis.conf
+  #  command: redis-server /usr/local/etc/redis/redis.conf
+  #twemproxy:
+  #  image: baonnt/twemproxy
+  #  ports:
+  #    - "22121:22121"
+  #    - "22222:22222"
+  #  volumes:
+  #    - ./twemproxy-data/nutcracker.yml:/etc/nutcracker.conf
+  #    - /var/log/nutcracker/nutcracker.log:/var/log/nutcracker/nutcracker.log
+  #  command: ["--conf-file=/etc/nutcracker.conf", "--mbuf-size=512", "--verbose=4"]
+  #grafana:
+  #  image: grafana/grafana:latest
+  #  ports:
+  #    - '3000:3000'
+  #  user: '1000'
+  #  environment:
+  #    - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  #    - GF_AUTH_ANONYMOUS_ENABLED=false
+  #    - GF_AUTH_BASIC_ENABLED=true
+  #    - GF_ENABLE_GZIP=true
+  #    # - GF_INSTALL_PLUGINS=redis-app,redis-datasource,grafana-clock-panel,grafana-simple-json-datasource
+  #  volumes:
+  #    - ./grafana/config.ini:/etc/grafana/config.ini
+  #    - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+  #    - ./grafana/data:/var/lib/grafana
+  #  network_mode: "host"
+  #  depends_on:
+  #    - twemproxy
+  #prometheus:
+  #  image: "prom/prometheus:master"
+  #  command: ["--config.file=/prometheus.yml"]
+  #  volumes:
+  #    - ./prometheus-data/prometheus.yaml:/prometheus.yml
+  #  ports:
+  #    - 9090:9090
+  #  depends_on:
+  #    - twemproxy
+  #
+  #twemproxy_exporter:
+  #  image: "baonnt/twemproxy_exporter"
+  #  command: ["--twemproxy.stats-address=twemproxy:22222"]
+  #  ports:
+  #    - 9151:9151
+  #  depends_on:
+  #    - twemproxy
 
   memcached_userinfo:
     image: "memcached:latest"
@@ -108,13 +108,25 @@ services:
     ports:
       - 11671-11680:11671-11680
     network_mode: "host"
+    
+  memcached_default:
+    image: "memcached:latest"
+    command: ["-m", "6144", "-l", "0.0.0.0:10000,0.0.0.0:10001,0.0.0.0:10002,0.0.0.0:10003,0.0.0.0:10004,0.0.0.0:10005,0.0.0.0:10006,0.0.0.0:10007,0.0.0.0:10008,0.0.0.0:10009", "-c", "20000", "-t", "16"]
+    ports:
+      - 10000-10009:10000-10009
+    network_mode: "host"
+
   mcrouter:
     image: "mcrouter/mcrouter"
-    command: ["--config-file=/usr/local/etc/mcrouter/mcrouter_config.json", "-p", "51111"]
+    #command: ["--config-file=/usr/local/etc/mcrouter/mcrouter_config.json", "-p", "51111"]
+    command: ["/usr/local/etc/mcrouter/dev-mcrouter-extrainfo"]
     ports:
       - 51111:51111
     volumes:
       - ./mcrouter-data/mcrouter_config.json:/usr/local/etc/mcrouter/mcrouter_config.json
+      - ./mcrouter-data/dev-mcrouter-extrainfo-standalone:/usr/local/etc/mcrouter/dev-mcrouter-extrainfo-standalone
+      - ./mcrouter-data/dev-prefix-broadcast-extrainfo.json:/usr/local/etc/mcrouter/dev-prefix-broadcast-extrainfo.json
+      - ./mcrouter-data/mcrouter.log:/usr/local/etc/mcrouter/log/mcrouter.log
     network_mode: "host"
 
 networks:

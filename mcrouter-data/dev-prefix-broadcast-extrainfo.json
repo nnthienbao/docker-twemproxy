@@ -1,0 +1,107 @@
+{
+  "pools": {
+    "pool-device-127.0.0.1": "@pool_multiple_ports(127.0.0.1,11231,10)",
+
+    "pool-profile-127.0.0.1": "@pool_multiple_ports(127.0.0.1,11211,10)",
+
+    "pool-location-127.0.0.1": "@pool_multiple_ports(127.0.0.1,11541,10)",
+
+    "pool-extra-127.0.0.1": "@pool_multiple_ports(127.0.0.1,11671,10)",
+    
+    "pool-default": {
+      "servers": [
+        "127.0.0.1:10000"
+      ]
+    }
+
+  },
+  "macros": {
+    "route_broadcast_put_random_get": {
+      "type": "macroDef",
+      "params": [ "alias_name", "type" ],
+      "result": {
+        "aliases": [
+          "%alias_name%"
+        ],
+        "route": {
+          "type": "OperationSelectorRoute",
+          "operation_policies": {
+            "add": "Broadcast%type%",
+            "set":"Broadcast%type%",
+            "delete": "Broadcast%type%"
+          },
+          "default_policy": "Random%type%"
+        }
+      }
+    },
+    "pool_multiple_ports": {
+      "type": "macroDef",
+      "params": [ "ip", "first_port", "num_ports" ],
+      "result": {
+        "servers": {
+          "type": "transform",
+          "dictionary": "@range(@int(0),@sub(@int(%num_ports%),@int(1)))",
+          "itemName": "num",
+          "itemTransform": {
+            "type": "merge",
+            "params": [ "%ip%:", "@str(@add(@int(%first_port%), @int(%num%)))"]
+          }
+        }
+      }
+    }
+  },
+  "named_handles": [
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastDevice",
+      "children":["PoolRoute|pool-device-127.0.0.1"]
+    },
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastProfile",
+      "children":["PoolRoute|pool-profile-127.0.0.1"]
+    },
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastLocation",
+      "children":["PoolRoute|pool-location-127.0.0.1"]
+    },
+    {
+      "type": "AllAsyncRoute",
+      "name": "BroadcastExtrainfo",
+      "children":["PoolRoute|pool-extra-127.0.0.1"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomDevice",
+      "children":["PoolRoute|pool-device-127.0.0.1"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomProfile",
+      "children":["PoolRoute|pool-profile-127.0.0.1"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomLocation",
+      "children":["PoolRoute|pool-location-127.0.0.1"]
+    },
+    {
+      "type":"RandomRoute",
+      "name": "RandomExtrainfo",
+      "children":["PoolRoute|pool-extra-127.0.0.1"]
+    }
+  ],
+  "routes":[
+    "@route_broadcast_put_random_get(/zsocial/device/,Device)",
+    "@route_broadcast_put_random_get(/zsocial/profile/,Profile)",
+    "@route_broadcast_put_random_get(/zsocial/location/,Location)",
+    "@route_broadcast_put_random_get(/zsocial/extra/,Extrainfo)",
+    {
+      "aliases": [ 
+        "/zsocial/default/"
+      ],
+      "route": "PoolRoute|pool-default"
+    }
+  ]
+}
